@@ -10,7 +10,7 @@ public interface ProjectService {
 
     Optional<ProjectEntity> getById(Long id);
 
-    ProjectEntity insert(ProjectEntity employee);
+    ProjectEntity insert(ProjectEntity project);
 
     void deleteById(Long id);
 }

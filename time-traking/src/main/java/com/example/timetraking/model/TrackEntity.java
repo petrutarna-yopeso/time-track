@@ -1,25 +1,28 @@
 package com.example.timetraking.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Builder
+@Table(name = "time_trackings")
 public class TrackEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long Id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
 
-    private LocalDateTime Begin;
-    private LocalDateTime End;
+    @NotBlank
+    private LocalDateTime begin;
+
+    @NotBlank
+    private LocalDateTime finish;
 
 }

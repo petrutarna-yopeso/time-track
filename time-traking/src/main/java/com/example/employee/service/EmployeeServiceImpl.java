@@ -3,13 +3,14 @@ package com.example.employee.service;
 import com.example.employee.model.EmployeeEntity;
 import com.example.employee.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -17,7 +18,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public  Iterable<EmployeeEntity> fetchAll() {
-        return employeeRepository.getAll();
+        return employeeRepository.findAll();
     }
 
     @Override

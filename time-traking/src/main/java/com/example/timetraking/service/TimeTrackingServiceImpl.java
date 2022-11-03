@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -20,8 +18,7 @@ class TimeTrackingServiceImpl implements TimeTrakingService {
 
     @Override
     public List<TrackEntity> fetchAll() {
-        return StreamSupport.stream(timeTrakingRepository.getAll().spliterator(), false)
-                .collect(Collectors.toList());
+        return timeTrakingRepository.findAll();
     }
 
     @Override
