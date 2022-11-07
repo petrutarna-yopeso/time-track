@@ -9,10 +9,11 @@ import java.util.Optional;
 public interface TimeTrakingService {
      List<TrackEntity> fetchAll();
 
-     Optional<TrackEntity> getById(Long id);
+     TrackEntity getById(Long id);
 
      TrackEntity insert(TrackEntity employee);
 
      void deleteById(Long id);
 
+     TrackEntity update(Long id, TrackEntity updatedEntity);
 }

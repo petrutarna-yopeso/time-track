@@ -30,13 +30,13 @@ public class ProjectServiceImplTest {
 
         // when
         List<ProjectEntity> projects = new ArrayList<>(){{
-            add(ProjectEntity.builder().Id(1L).build());
-            add(ProjectEntity.builder().Id(2L).build());
+            add(ProjectEntity.builder().id(1L).build());
+            add(ProjectEntity.builder().id(2L).build());
         }};
 
         List<ProjectEntity> newProjects = new ArrayList<>(){{
-            add(ProjectEntity.builder().Id(2L).name("ddd").build());
-            add(ProjectEntity.builder().Id(1L).build());
+            add(ProjectEntity.builder().id(2L).name("ddd").build());
+            add(ProjectEntity.builder().id(1L).build());
         }};
         when(projectRepository.findAll()).thenReturn(projects);
 
@@ -48,7 +48,7 @@ public class ProjectServiceImplTest {
     @Test
     void canInsert() {
         // given
-        ProjectEntity newProject = ProjectEntity.builder().Id(1L).name("Clastix").build();
+        ProjectEntity newProject = ProjectEntity.builder().id(1L).name("Clastix").build();
 
         // when
         projectService.insert(newProject);
@@ -67,7 +67,7 @@ public class ProjectServiceImplTest {
     @Test
     void canDelete() {
         // given
-        ProjectEntity newProject = ProjectEntity.builder().Id(1L).name("Clastix").build();
+        ProjectEntity newProject = ProjectEntity.builder().id(1L).name("Clastix").build();
 
         // when
         projectService.deleteById(newProject.getId());

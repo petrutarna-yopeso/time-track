@@ -11,22 +11,26 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = {"/employee/"})
+@RequestMapping("/employee/")
 @RequiredArgsConstructor
 @Slf4j
 public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getAll() {
         return (ResponseEntity.ok(employeeService.fetchAll()));
-
     };
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<EmployeeEntity> addEmployee(@Valid @RequestBody EmployeeEntity newEmployee) {
         return ResponseEntity.ok(employeeService.insert(newEmployee));
+    }
+
+    @PutMapping("{employee_id}")
+    public ResponseEntity<EmployeeEntity> updateEmployee(@PathVariable(name = "employee_id") Long id, @Valid @RequestBody EmployeeEntity newEmployee) {
+        return ResponseEntity.ok(employeeService.update(id, newEmployee));
     }
 
     @DeleteMapping("{employee_id}")
@@ -35,7 +39,7 @@ public class EmployeeController {
             employeeService.deleteById(id);
             return ResponseEntity.ok().build();
         }catch (Exception ex) {
-            log.error(String.format("Can't delete employee with id: %d", id), ex);
+            log.info(String.format("Can't delete employee with id: %d", id), ex);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     };

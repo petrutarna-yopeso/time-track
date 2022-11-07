@@ -19,12 +19,24 @@ public class ProjectController {
 
     private  final ProjectService projectService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<ProjectEntity>> getAll() {return ResponseEntity.ok(projectService.fetchAll());};
 
-    @PostMapping()
+    @GetMapping("{project_id}")
+    public ResponseEntity<ProjectEntity> getDetails(@PathVariable(name = "project_id") Long id) {
+        return ResponseEntity.ok(projectService.getById(id));};
+
+    @PostMapping
     public ResponseEntity<ProjectEntity> addProject(@Valid @RequestBody ProjectEntity newProject) {
         return ResponseEntity.ok(projectService.insert(newProject));
+    }
+
+    @PutMapping("{project_id}")
+    public ResponseEntity<ProjectEntity> updateProject(
+            @PathVariable(name = "project_id") Long id,
+            @Valid @RequestBody ProjectEntity newProject
+    ) {
+        return ResponseEntity.ok(projectService.update(id, newProject));
     }
 
     @DeleteMapping("{project_id}")

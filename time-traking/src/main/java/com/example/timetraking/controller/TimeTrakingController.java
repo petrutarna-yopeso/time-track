@@ -1,5 +1,6 @@
 package com.example.timetraking.controller;
 
+import com.example.employee.model.EmployeeEntity;
 import com.example.timetraking.model.TrackEntity;
 import com.example.timetraking.service.TimeTrakingService;
 import lombok.RequiredArgsConstructor;
@@ -12,24 +13,37 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = {"/traking"})
+@RequestMapping(value = "/traking/")
 @RequiredArgsConstructor
 @Slf4j
 public class TimeTrakingController {
 
     private final TimeTrakingService timeTrakingService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<TrackEntity>> getAll() {
         return (ResponseEntity.ok(timeTrakingService.fetchAll()));
     }
 
-    @PostMapping("/")
+    @GetMapping("{tracking_id}")
+    public ResponseEntity<TrackEntity> getDetails(@PathVariable(name = "tracking_id") Long id) {
+        return (ResponseEntity.ok(timeTrakingService.getById(id)));
+    }
+
+    @PostMapping
     public ResponseEntity<TrackEntity> addTimeTrack(@Valid @RequestBody TrackEntity newTimeTrack) {
         return ResponseEntity.ok(timeTrakingService.insert(newTimeTrack));
     }
 
-    @DeleteMapping("/{tracking_id}")
+    @PutMapping("{tracking_id}")
+    public ResponseEntity<TrackEntity> updateTimeTrack(
+            @PathVariable(name = "tracking_id") Long id,
+            @Valid @RequestBody TrackEntity updatedEntity
+    ) {
+        return ResponseEntity.ok(timeTrakingService.update(id, updatedEntity));
+    }
+
+    @DeleteMapping("{tracking_id}")
     public ResponseEntity<?> deleteTimeTrack(@PathVariable(name = "tracking_id") Long id) {
         try {
             timeTrakingService.deleteById(id);

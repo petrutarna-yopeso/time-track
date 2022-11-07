@@ -1,6 +1,7 @@
 package com.example.employee.service;
 
 import com.example.employee.model.EmployeeEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -11,5 +12,10 @@ public interface EmployeeService {
 
     EmployeeEntity insert(EmployeeEntity employee);
 
+    @Transactional
+    EmployeeEntity update(Long id, EmployeeEntity employee);
+
     void deleteById(Long id);
+
+    Optional<EmployeeEntity> findById(Long id);
 }

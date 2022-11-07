@@ -2,10 +2,11 @@ package com.example.employee.service;
 
 import com.example.employee.model.EmployeeEntity;
 import com.example.employee.repository.EmployeeRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -32,7 +33,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeEntity update(Long id, EmployeeEntity employee) {
+        EmployeeEntity existingEmployee = employeeRepository.findById(id).orElseThrow();
+        BeanUtils.copyProperties(employee, existingEmployee, "id");
+        return existingEmployee;
+    }
+
+    @Override
     public void deleteById(Long id) {
         employeeRepository.deleteById(id);
-    };
+    }
+
+    @Override
+    public Optional<EmployeeEntity> findById(Long id) {
+
+        return employeeRepository.findById(id);
+    }
+
+    ;
 }
