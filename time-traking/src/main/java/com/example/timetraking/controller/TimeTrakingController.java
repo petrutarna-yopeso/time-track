@@ -1,6 +1,5 @@
 package com.example.timetraking.controller;
 
-import com.example.employee.model.EmployeeEntity;
 import com.example.timetraking.model.TrackEntity;
 import com.example.timetraking.service.TimeTrakingService;
 import lombok.RequiredArgsConstructor;

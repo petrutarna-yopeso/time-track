@@ -3,7 +3,6 @@ package com.example.timetraking.model;
 import com.example.employee.model.EmployeeEntity;
 import com.example.project.model.ProjectEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +19,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "time_trackings")
 public class TrackEntity {
 
@@ -37,9 +35,9 @@ public class TrackEntity {
     @NotBlank
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private EmployeeEntity employee;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private ProjectEntity project;
 }

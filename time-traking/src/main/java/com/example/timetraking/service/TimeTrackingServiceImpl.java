@@ -11,10 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -39,15 +37,16 @@ class TimeTrackingServiceImpl implements TimeTrakingService {
 
     @Override
     public TrackEntity insert(TrackEntity track) {
-        Optional<EmployeeEntity> employee =  employeeService.findById(track.getEmployee().getId());
-        if (employee.isEmpty()) throw  new NoSuchElementException(
-                String.format("Nu exista angat cu id-ul: %d", track.getEmployee().getId()));
-        Optional<ProjectEntity> project =  projectService.findById(track.getProject().getId());
-        if (employee.isEmpty()) throw  new NoSuchElementException(
-                String.format("Nu exista proiect cu id-ul: %d", track.getProject().getId()));
+        EmployeeEntity employee =  employeeService.findById(track.getEmployee().getId())
+                .orElseThrow(()->new NoSuchElementException(
+                        String.format("Nu exista angat cu id-ul: %d", track.getEmployee().getId())));
+        ProjectEntity project =  projectService.findById(track.getProject().getId()).orElseThrow(
+                ()-> new NoSuchElementException(
+                        String.format("Nu exista proiect cu id-ul: %d", track.getProject().getId())
+        ));
 
-        track.setEmployee(employee.get());
-        track.setProject(project.get());
+        track.setEmployee(employee);
+        track.setProject(project);
 
         return timeTrakingRepository.save(track);
     }
