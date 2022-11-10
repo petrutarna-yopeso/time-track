@@ -1,4 +1,4 @@
-package com.example.timetraking.errors;
+package com.example.errors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.timetraking.errors;
+package com.example.errors;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
