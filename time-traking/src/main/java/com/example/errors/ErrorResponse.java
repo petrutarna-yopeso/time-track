@@ -1,20 +1,23 @@
 package com.example.errors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
-
-@Data
-@AllArgsConstructor
+import java.time.LocalDateTime;
 @Builder
+@Data
 public class ErrorResponse {
 
     private int statusCode;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "YYY-mm-dd HH:mm:ss")
-    private Date timestamp;
+
+    @Builder.Default
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "YY-MM-dd HH:mm:ss")
+    private LocalDateTime timestamp = LocalDateTime.now();
+
     private String message;
+
     private String description;
+
 }

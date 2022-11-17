@@ -16,7 +16,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "employees")
 public class EmployeeEntity {

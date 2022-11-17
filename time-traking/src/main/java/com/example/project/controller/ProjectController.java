@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping(value = {"/project/"})
 @RequiredArgsConstructor
 @Slf4j
-public class ProjectController {
+class ProjectController {
 
     private  final ProjectService projectService;
 
