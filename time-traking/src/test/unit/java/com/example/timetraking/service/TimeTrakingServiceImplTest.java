@@ -140,9 +140,8 @@ class TimeTrakingServiceImplTest {
                 .thenReturn(Optional.empty());
 
         // then
-        assertThatThrownBy(() -> {
-            timeTrakingService.insert(timeTraking);
-        }).isInstanceOf(NoSuchElementException.class)
+        assertThatThrownBy(() -> timeTrakingService.insert(timeTraking))
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessageContaining("Nu exista proiect cu id-ul");
     }
 
