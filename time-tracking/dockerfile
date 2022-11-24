@@ -1,0 +1,20 @@
+# First stage: complete build environment
+FROM eclipse-temurin:17.0.1_12-jdk-focal AS builder
+
+# add pom.xml and source code
+ADD ./pom.xml pom.xml
+ADD ./src src/
+ADD ./.mvn .mvn/
+ADD ./mvnw mvnw
+
+# package jar
+RUN ./mvnw clean verify
+
+FROM eclipse-temurin:17.0.1_12-jre-focal as runtime
+
+EXPOSE 8080
+
+# App 
+RUN mkdir /app
+COPY --from=builder ./target/time-traking-0.0.1-SNAPSHOT.jar /app
+CMD ["java", "-jar", "/app/time-traking-0.0.1-SNAPSHOT.jar"]
