@@ -1,0 +1,1 @@
+Simple Time Tracking app using Spring Boot, Docker and AWS. 
