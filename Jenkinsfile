@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     env.GIT_COMMIT_REV = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
-                    customImage = docker.build("petrutarna/time-tracking-api:${GIT_COMMIT_REV}-${env.BUILD_NUMBER}")
+                    customImage = docker.build("petrutarna/time-tracking-api:latest")
                 }
             }
         }
