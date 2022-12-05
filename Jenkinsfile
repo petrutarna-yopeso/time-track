@@ -7,22 +7,7 @@ pipeline {
         reuseNode true
       }
     }
-    
-    options {
-    skipDefaultCheckout(true)
-    }
-
     stages {
-        stage('Clean Workspace') {
-            steps {
-            deleteDir()
-            }
-        }
-        stage('Git Clone Source') {
-            steps {
-                git url: 'https://github.com/petrutarna-yopeso/time-track.git'
-            }
-        }
 
         stage('Test and Build Docker Image') {
             when {
