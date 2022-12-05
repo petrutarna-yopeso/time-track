@@ -3,7 +3,6 @@ pipeline {
       dockerfile {
         dir './time-tracking/'
         filename 'dockerfile'
-        label 'spring-api'
         reuseNode true
       }
     }
