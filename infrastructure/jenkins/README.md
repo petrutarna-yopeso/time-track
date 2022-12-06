@@ -1,5 +1,4 @@
-To start jenkins locally run next command. Replace path to jenkins folder.
-docker run -d -v /Users/petrutarna/Dev/time-track/infrastructure/jenkins/jenkins_home:/var/jenkins_home -p 8088:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk11
+To start jenkins locally run next commands in jenkins folder. Replace path to jenkins folder. This image is used to get acces to host docker in order to run pipelines in a docker node.
 
-Username: admin
-Password: password123!
+1) Set env JENKINS_HOME in .env file to point to folder where to store jenkins_home folder
+2) run docker-compose up
