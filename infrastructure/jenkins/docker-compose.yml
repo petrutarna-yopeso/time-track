@@ -1,0 +1,46 @@
+version: '3.5'
+
+services:
+  jenkins:
+    container_name: jenkins-local
+    build:
+      dockerfile: ./jenkins-dockerfile
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: 1
+    ports:
+      - 8088:8080
+      - 50000:50000
+    networks:
+      - jenkins-ntw
+    volumes:
+      - ${JENKINS_HOME}:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+    depends_on:
+      - "docker-dind"
+
+  docker-dind:
+    container_name: docker-dind
+    image: docker:dind
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    ports:
+      - 2376:2376
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - ${JENKINS_HOME}:/var/jenkins_home
+    networks:
+      jenkins-ntw:
+        aliases:
+          - docker
+    restart: unless-stopped
+  
+volumes:
+  jenkins-docker-certs:
+
+networks:
+  jenkins-ntw:
+    driver: bridge

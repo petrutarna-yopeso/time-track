@@ -1,25 +1,44 @@
 pipeline {
     agent {
-      dockerfile {
-        dir './time-tracking/'
-        filename 'dockerfile'
-        label 'spring-api'
-        reuseNode true
-      }
+        docker
     }
+  
     stages {
 
-        stage('Test and Build Docker Image') {
-            when {
-                branch '*'
-                }
-            steps {
-                script {
-                    env.GIT_COMMIT_REV = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
-                    customImage = docker.build("petrutarna/time-tracking-api:${GIT_COMMIT_REV}-${env.BUILD_NUMBER}")
-                }
+  
+
+        // build + unittest
+        // integration
+        // Code Coverage
+        
+        // Dependency check
+        // Static code analisys
+        
+        // Build Docker 
+        // Push Docker
+        
+        // Deploy To Automation ENV
+        // Run System Test on Automation ENV
+        
+        // Deploy to Staging and Prod
+
+
+         stage('Compile run tests and build docker image') {
+            steps{
+                sh "echo "
             }
-        }
+         }
+
+
+
+        // stage('Test and Build Docker Image') {
+        //     steps {
+        //         script {
+        //             env.GIT_COMMIT_REV = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
+        //             customImage = docker.build("petrutarna/time-tracking-api:latest", "./time-tracking/")
+        //         }
+        //     }
+        // }
         // stage('Push Docker Image') {
         //     when {
         //         branch 'main'
