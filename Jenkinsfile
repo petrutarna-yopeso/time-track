@@ -25,7 +25,9 @@ pipeline {
                     // registryCredentials = credentials('docker-credentials')
                 }
             steps{
-                dockerImage = docker.build("${registry}:${env.BUILD_NUMBER}", "-f ./time-tracking/dockerfile")
+                 script {
+                    dockerImage = docker.build("${registry}:${env.BUILD_NUMBER}", "-f ./time-tracking/dockerfile")
+                 }
             }
          }
 
