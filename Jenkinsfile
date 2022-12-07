@@ -26,7 +26,7 @@ pipeline {
                 }
             steps{
                  script {
-                    dockerImage = docker.build("${registry}:${env.BUILD_NUMBER}", "-f ./time-tracking/dockerfile .")
+                    dockerImage = docker.build("${registry}:${env.BUILD_NUMBER}", "./time-tracking/")
                  }
             }
          }
