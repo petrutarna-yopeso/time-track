@@ -40,10 +40,10 @@ pipeline {
             // }
             steps {
                 script {
-                    // gitRev = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
+                    gitRev = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
                     docker.withRegistry('', 'registryCredentials') {
-                        // customImage.push("${gitRev}-${env.BUILD_NUMBER}")
-                        customImage.push("latest")
+                        dockerImage.push("${gitRev}-${env.BUILD_NUMBER}")
+                        dockerImage.push("latest")
                     }
                 }
             }
