@@ -3,6 +3,10 @@ pipeline {
 
     stages {
 
+    environment {
+            imageName = "petrutarna/time-tracking-api"
+        }
+
         // build + unittest
         // integration
         // Code Coverage
@@ -21,20 +25,19 @@ pipeline {
 
          stage('Compile, run tests, and build docker image') {
                 environment {
-                    registry = "petrutarna/time-tracking-api"
+                    dockerContextPath = "./time-tracking/"
                 }
+
             steps{
                  script {
-                    
-                    dockerImage = docker.build("${registry}", "./time-tracking/")
+                    sh "docker buildx build --platform linux/amd64,linux/arm64 --tag ${imageName} --file ${dockerContextPath}dockerfile ${dockerContextPath}"
+                    // dockerImage = docker.build("${imageName}", ${dockerContextPath})
                  }
             }
          }
 
         stage('Push Docker Image') {
-               environment {
-                    registryCreds = credentials('registryCredentials')
-                }
+
             // when {
             //     branch 'main'
             // }
@@ -42,46 +45,23 @@ pipeline {
                 script {
                     gitRev = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
                     docker.withRegistry('', 'registryCredentials') {
-                        dockerImage.push("${gitRev}-${env.BUILD_NUMBER}")
-                        dockerImage.push("latest")
+                        // dockerImage.push("${gitRev}")
+                        // dockerImage.push("latest")
+                        
+                        sh "docker tag ${imageName} ${imageName}:${gitRev}"
+                        sh "docker push ${imageName}:${gitRev}"
+                        sh "docker tag ${imageName}:${gitRev} ${imageName}:latest"
+                        sh "docker push ${imageName}:latest"
+                        
                     }
                 }
             }
         }
 
-
-
-        // stage('Test and Build Docker Image') {
-        //     steps {
-        //         script {
-        //             env.GIT_COMMIT_REV = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
-        //             customImage = docker.build("petrutarna/time-tracking-api:latest", "./time-tracking/")
-        //         }
-        //     }
-        // }
-        // stage('Push Docker Image') {
-        //     when {
-        //         branch 'main'
-        //     }
-        //     steps {
-        //         script {
-        //             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_creds') {
-        //                 customImage.push("${GIT_COMMIT_REV}-${env.BUILD_NUMBER}")
-        //                 customImage.push("latest")
-        //             }
-        //         }
-        //     }
-        // }
-
-        // stage('Clean') {
-        //     steps{
-        //         sh "docker rmi ${imageId}"
-        // }
+    post{
+        always {  
+            sh 'docker logout'     
+            sh 'docker rmi -f $(docker images -q | tail -n +3)'     
+        }      
     }
-
-    // post{
-    // always {  
-	// sh 'docker logout'     
-    // }      
-// }
 }
