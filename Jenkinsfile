@@ -3,7 +3,7 @@ pipeline {
 
     stages {
 
-    environment {
+        environment {
             imageName = "petrutarna/time-tracking-api"
         }
 
@@ -47,7 +47,7 @@ pipeline {
                     docker.withRegistry('', 'registryCredentials') {
                         // dockerImage.push("${gitRev}")
                         // dockerImage.push("latest")
-                        
+
                         sh "docker tag ${imageName} ${imageName}:${gitRev}"
                         sh "docker push ${imageName}:${gitRev}"
                         sh "docker tag ${imageName}:${gitRev} ${imageName}:latest"
@@ -58,10 +58,11 @@ pipeline {
             }
         }
 
-    post{
-        always {  
-            sh 'docker logout'     
-            sh 'docker rmi -f $(docker images -q | tail -n +3)'     
-        }      
+        post{
+            always {  
+                sh 'docker logout'     
+                sh 'docker rmi -f $(docker images -q | tail -n +3)'     
+            }      
+        }
     }
 }
