@@ -41,7 +41,6 @@ pipeline {
             steps {
                 script {
                     // gitRev = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
-                    sh 
                     docker.withRegistry('', 'registryCredentials') {
                         // customImage.push("${gitRev}-${env.BUILD_NUMBER}")
                         customImage.push("latest")
@@ -80,9 +79,9 @@ pipeline {
         // }
     }
 
-    post{
-    always {  
-	sh 'docker logout'     
-    }      
+    // post{
+    // always {  
+	// sh 'docker logout'     
+    // }      
 }
 }
