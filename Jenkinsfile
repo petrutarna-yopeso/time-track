@@ -22,14 +22,32 @@ pipeline {
          stage('Compile, run tests, and build docker image') {
                 environment {
                     registry = "petrutarna/time-tracking-api"
-                    // registryCredentials = credentials('docker-credentials')
                 }
             steps{
                  script {
-                    dockerImage = docker.build("${registry}:${env.BUILD_NUMBER}", "./time-tracking/")
+                    
+                    dockerImage = docker.build("${registry}", "./time-tracking/")
                  }
             }
          }
+
+        stage('Push Docker Image') {
+                environment {
+                    registryCredentials = credentials('docker-credentials')
+                }
+            // when {
+            //     branch 'main'
+            // }
+            steps {
+                script {
+                    gitRev = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
+                    // docker.withRegistry('', "${registryCredentials}") {
+                        customImage.push("${gitRev}-${env.BUILD_NUMBER}")
+                        customImage.push("latest")
+                    // }
+                }
+            }
+        }
 
 
 
