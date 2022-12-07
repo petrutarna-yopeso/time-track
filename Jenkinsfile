@@ -32,17 +32,15 @@ pipeline {
          }
 
         stage('Push Docker Image') {
-                environment {
-                    registryCredentials = credentials('docker-credentials')
-                }
+               
             // when {
             //     branch 'main'
             // }
             steps {
                 script {
                     gitRev = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
-                    ech "echo ${registryCredentials}" 
-                    docker.withRegistry('', registryCredentials) {
+                    ech "echo ${credentials('registryCredentials')}" 
+                    docker.withRegistry('', 'registryCredentials') {
                         customImage.push("${gitRev}-${env.BUILD_NUMBER}")
                         customImage.push("latest")
                     }
