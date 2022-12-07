@@ -61,7 +61,6 @@ pipeline {
         post{
             always {  
                 sh "docker logout"
-                sh "docker rmi -f $(docker images -q | tail -n +3)"
             }      
         }
     }
