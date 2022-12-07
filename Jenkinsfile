@@ -1,11 +1,9 @@
 pipeline {
     agent any
-
-    stages {
-
-        environment {
+    environment {
             imageName = "petrutarna/time-tracking-api"
         }
+    stages {
 
         // build + unittest
         // integration
@@ -61,6 +59,7 @@ pipeline {
         post{
             always {  
                 sh "docker logout"
+                sh "docker rmi -f $(docker images -q | tail -n +3)"
             }      
         }
     }
