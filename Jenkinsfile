@@ -1,8 +1,7 @@
 pipeline {
     agent any
-    stages {
 
-  
+    stages {
 
         // build + unittest
         // integration
@@ -20,9 +19,13 @@ pipeline {
         // Deploy to Staging and Prod
 
 
-         stage('Compile run tests and build docker image') {
+         stage('Compile, run tests, and build docker image') {
+                environment {
+                    registry = "petrutarna/time-tracking-api"
+                    // registryCredentials = credentials('docker-credentials')
+                }
             steps{
-                sh "echo "
+                dockerImage = docker.build("${registry}:${env.BUILD_NUMBER}", "-f ./time-tracking/dockerfile")
             }
          }
 
@@ -55,4 +58,10 @@ pipeline {
         //         sh "docker rmi ${imageId}"
         // }
     }
+
+    post{
+    always {  
+	sh 'docker logout'     
+    }      
+}
 }
