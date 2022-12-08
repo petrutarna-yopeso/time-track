@@ -29,7 +29,7 @@ pipeline {
             steps{
                  script {
                     // sh "docker buildx build --platform linux/amd64,linux/arm64 --tag ${imageName} --file ${dockerContextPath}dockerfile ${dockerContextPath}"
-                    dockerImage = docker.build("${imageName}", ${dockerContextPath})
+                    dockerImage = docker.build(imageName, dockerContextPath)
                  }
             }
          }
@@ -43,7 +43,7 @@ pipeline {
                 script {
                     gitRev = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
                     docker.withRegistry('', 'registryCredentials') {
-                        dockerImage.push("${gitRev}")
+                        dockerImage.push(gitRev)
                         dockerImage.push("latest")
 
                         // sh "docker tag ${imageName} ${imageName}:${gitRev}"
