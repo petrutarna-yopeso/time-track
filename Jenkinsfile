@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        dockerfile {
+            filename 'jenkins-buildx-dockerfile'
+            dir './infrastructure/jenkins'
+        }
+        }
     environment {
             imageName = "petrutarna/time-tracking-api"
         }
