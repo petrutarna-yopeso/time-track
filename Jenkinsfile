@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        dockerfile {
-            filename 'jenkins-buildx-dockerfile'
-            dir './infrastructure/jenkins'
-        }
-        }
+    agent any
     environment {
             imageName = "petrutarna/time-tracking-api"
         }
@@ -27,13 +22,18 @@ pipeline {
 
 
          stage('Compile, run tests, and build docker image') {
+            agent {
+                dockerfile {
+                    filename 'jenkins-buildx-dockerfile'
+                    dir './infrastructure/jenkins'
+                }
+            }
                 environment {
                     dockerContextPath = "./time-tracking/"
                 }
 
             steps{
                  script {
-                    sh "docker buildx create --use"
                     sh "docker buildx build --platform linux/amd64,linux/arm64 --tag ${imageName} --file ${dockerContextPath}dockerfile ${dockerContextPath}"
                     // dockerImage = docker.build(imageName, dockerContextPath)
                  }
