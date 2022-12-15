@@ -1,5 +1,5 @@
 pipeline {
-    agent {name "mb"}
+    agent {label 'mb-node'}
     environment {
             imageName = "petrutarna/time-tracking-api"
         }
