@@ -28,7 +28,7 @@ pipeline {
 
             steps{
                  script {
-                    sh "docker buildx build --platform linux/amd64,linux/arm64 --tag ${imageName} --file ${dockerContextPath}dockerfile ${dockerContextPath}"
+                    sh "docker buildx build --platform linux/amd64 --tag ${imageName} --file ${dockerContextPath}dockerfile ${dockerContextPath} --load"
                     // dockerImage = docker.build(imageName, dockerContextPath)
                  }
             }
