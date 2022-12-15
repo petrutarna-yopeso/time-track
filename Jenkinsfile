@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {name "mb"}
     environment {
             imageName = "petrutarna/time-tracking-api"
         }
@@ -22,15 +22,9 @@ pipeline {
 
 
          stage('Compile, run tests, and build docker image') {
-            agent {
-                dockerfile {
-                    filename 'jenkins-buildx-dockerfile'
-                    dir './infrastructure/jenkins'
-                }
+            environment {
+                dockerContextPath = "./time-tracking/"
             }
-                environment {
-                    dockerContextPath = "./time-tracking/"
-                }
 
             steps{
                  script {

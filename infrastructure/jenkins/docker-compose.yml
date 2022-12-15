@@ -1,6 +1,29 @@
 version: '3.5'
 
 services:
+  
+  docker:
+    container_name: docker
+    image: docker:dind
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    ports:
+      - 2376:2376
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - ${JENKINS_HOME}:/var/jenkins_home
+    networks:
+      jenkins-ntw:
+        aliases:
+          - docker
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "docker ps"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   jenkins:
     container_name: jenkins-local
     build:
@@ -19,25 +42,9 @@ services:
       - ${JENKINS_HOME}:/var/jenkins_home
       - jenkins-docker-certs:/certs/client:ro
     depends_on:
-      - "docker-dind"
-
-  docker-dind:
-    container_name: docker-dind
-    image: docker:dind
-    privileged: true
-    environment:
-      DOCKER_TLS_CERTDIR: /certs
-    ports:
-      - 2376:2376
-    volumes:
-      - jenkins-docker-certs:/certs/client
-      - ${JENKINS_HOME}:/var/jenkins_home
-    networks:
-      jenkins-ntw:
-        aliases:
-          - docker
-    restart: unless-stopped
-  
+      docker:
+        condition: service_healthy
+ 
 volumes:
   jenkins-docker-certs:
 
