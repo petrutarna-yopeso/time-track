@@ -1,0 +1,2 @@
+docker context create remote-cntx --docker "host=tcp://docker:2376,ca=/certs/client/ca.pem,cert=/certs/client/cert.pem,key=/certs/client/key.pem" &&
+docker buildx create --name remote-builder remote-cntx --use
