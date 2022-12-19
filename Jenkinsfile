@@ -1,61 +1,40 @@
 pipeline {
-    agent {
-        docker
-    }
-  
+    agent {label 'mb-node'}
+    environment {
+            imageName = "petrutarna/time-tracking-api"
+        }
     stages {
 
-  
-
-        // build + unittest
-        // integration
-        // Code Coverage
-        
-        // Dependency check
-        // Static code analisys
-        
-        // Build Docker 
-        // Push Docker
-        
-        // Deploy To Automation ENV
-        // Run System Test on Automation ENV
-        
-        // Deploy to Staging and Prod
-
-
-         stage('Compile run tests and build docker image') {
-            steps{
-                sh "echo "
+        stage('Compile, run tests, and build docker image') {
+            environment {
+                dockerContextPath = "./time-tracking/"
             }
-         }
 
+            steps{
+                    script {
+                    sh "docker buildx build --platform linux/amd64 --tag ${imageName} --file ${dockerContextPath}dockerfile ${dockerContextPath} --load"
+            }
+        }
 
+        stage('Push Docker Image to Dev registry') {
 
-        // stage('Test and Build Docker Image') {
-        //     steps {
-        //         script {
-        //             env.GIT_COMMIT_REV = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
-        //             customImage = docker.build("petrutarna/time-tracking-api:latest", "./time-tracking/")
-        //         }
-        //     }
-        // }
-        // stage('Push Docker Image') {
-        //     when {
-        //         branch 'main'
-        //     }
-        //     steps {
-        //         script {
-        //             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_creds') {
-        //                 customImage.push("${GIT_COMMIT_REV}-${env.BUILD_NUMBER}")
-        //                 customImage.push("latest")
-        //             }
-        //         }
-        //     }
-        // }
+            when {
+                branch 'main'
+            }
+            steps {
+                script {
+                    gitRev = sh (script: 'git log -n 1 --pretty=format:"%h"', returnStdout: true)
+                    docker.withRegistry('', 'registryCredentials') {
 
-        // stage('Clean') {
-        //     steps{
-        //         sh "docker rmi ${imageId}"
-        // }
+                        sh "docker tag ${imageName} ${imageName}:${gitRev}"
+                        sh "docker push ${imageName}:${gitRev}"
+                        sh "docker tag ${imageName}:${gitRev} ${imageName}:latest"
+                        sh "docker push ${imageName}:latest"
+                        
+                    }
+                }
+            }
+        }
+
     }
 }
