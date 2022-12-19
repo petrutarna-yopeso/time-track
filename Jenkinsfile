@@ -11,10 +11,12 @@ pipeline {
             }
 
             steps{
+
                 script {
                     sh "docker buildx build --platform linux/amd64 --tag ${imageName} --file ${dockerContextPath}dockerfile ${dockerContextPath} --load"
                 }
             }
+
         }
 
         stage('Push Docker Image to Dev registry') {
