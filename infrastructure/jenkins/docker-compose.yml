@@ -28,7 +28,7 @@ services:
     container_name: jenkins-local
     build:
       dockerfile: ./jenkins-dockerfile
-    command: sh -c "./docker-context.sh"
+    # command: /bin/sh -c "docker-context.sh"
     environment:
       DOCKER_TLS_CERTDIR: /certs
       DOCKER_HOST: tcp://docker:2376
