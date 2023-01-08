@@ -27,7 +27,7 @@ import java.util.UUID;
 public class AuthServiceImpl implements AuthService{
     private final EmployeeService employeeService;
 
-    private int tokenLifespan = 1;
+    private int tokenLifespan = 360;
 
     private String issuerName = "comExampleCompany";
 
