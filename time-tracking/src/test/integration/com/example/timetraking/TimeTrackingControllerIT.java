@@ -2,9 +2,6 @@ package com.example.timetraking;
 
 import com.example.employee.EmployeeEntity;
 import com.example.project.ProjectEntity;
-import com.example.timetraking.TimeTrakingController;
-import com.example.timetraking.TrackEntity;
-import com.example.timetraking.TimeTrakingService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,5 @@
-package com.example.employee.service;
+package com.example.employee;
 
-import com.example.employee.EmployeeServiceImpl;
-import com.example.employee.EmployeeEntity;
-import com.example.employee.EmployeeRepository;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

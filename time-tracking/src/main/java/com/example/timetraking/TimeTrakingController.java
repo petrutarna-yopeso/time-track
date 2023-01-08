@@ -1,5 +1,6 @@
 package com.example.timetraking;
 
+import com.example.anotations.Authorize;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/tracking/")
+@RequestMapping(value = "/tracking")
 @RequiredArgsConstructor
 @Slf4j
 class TimeTrakingController {
@@ -22,17 +23,20 @@ class TimeTrakingController {
         return (ResponseEntity.ok(timeTrakingService.fetchAll()));
     }
 
-    @GetMapping("{tracking_id}")
+    @GetMapping("/{tracking_id}")
+    @Authorize
     public ResponseEntity<TrackEntity> getDetails(@PathVariable(name = "tracking_id") Long id) {
         return (ResponseEntity.ok(timeTrakingService.getById(id)));
     }
 
     @PostMapping
+    @Authorize
     public ResponseEntity<TrackEntity> addTimeTrack(@Valid @RequestBody TrackEntity newTimeTrack) {
         return ResponseEntity.ok(timeTrakingService.insert(newTimeTrack));
     }
 
-    @PutMapping("{tracking_id}")
+    @PutMapping("/{tracking_id}")
+    @Authorize
     public ResponseEntity<TrackEntity> updateTimeTrack(
             @PathVariable(name = "tracking_id") Long id,
             @Valid @RequestBody TrackEntity updatedEntity
@@ -40,7 +44,8 @@ class TimeTrakingController {
         return ResponseEntity.ok(timeTrakingService.update(id, updatedEntity));
     }
 
-    @DeleteMapping("{tracking_id}")
+    @DeleteMapping("/{tracking_id}")
+    @Authorize
     public ResponseEntity<?> deleteTimeTrack(@PathVariable(name = "tracking_id") Long id) {
         try {
             timeTrakingService.deleteById(id);
