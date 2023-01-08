@@ -58,4 +58,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return err;
     }
 
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleAuthException(
+            ConstraintViolationException ex, WebRequest request) {
+
+        ErrorResponse err = ErrorResponse.builder()
+                .description(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                .message(ex.getMessage())
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .build();
+
+        return err;
+    }
+
 }

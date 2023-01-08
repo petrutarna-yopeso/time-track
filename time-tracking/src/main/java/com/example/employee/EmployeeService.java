@@ -17,4 +17,6 @@ public interface EmployeeService {
     void deleteById(Long id);
 
     Optional<EmployeeEntity> findById(Long id);
+
+    Optional<EmployeeEntity> findByEmail(String email);
 }
