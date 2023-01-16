@@ -1,7 +1,5 @@
 package com.example.employee;
 
-import com.example.employee.EmployeeEntity;
-import com.example.employee.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,7 +19,7 @@ public class EmployeeController {
     @GetMapping
     public ResponseEntity<?> getAll() {
         return (ResponseEntity.ok(employeeService.fetchAll()));
-    };
+    }
 
     @PostMapping
     public ResponseEntity<EmployeeEntity> addEmployee(@Valid @RequestBody EmployeeEntity newEmployee) {
@@ -42,5 +40,5 @@ public class EmployeeController {
             log.info(String.format("Can't delete employee with id: %d", id), ex);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-    };
+    }
 }

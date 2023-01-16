@@ -1,7 +1,5 @@
 package com.example.project;
 
-import com.example.project.ProjectEntity;
-
 import java.util.List;
 import java.util.Optional;
 

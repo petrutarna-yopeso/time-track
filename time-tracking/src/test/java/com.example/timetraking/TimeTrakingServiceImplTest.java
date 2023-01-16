@@ -1,9 +1,5 @@
 package com.example.timetraking;
 
-import com.example.employee.EmployeeEntity;
-import com.example.employee.EmployeeService;
-import com.example.project.ProjectEntity;
-import com.example.project.ProjectService;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.example.employee.EmployeeEntity;
+import com.example.employee.EmployeeService;
+import com.example.project.ProjectEntity;
+import com.example.project.ProjectService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -76,9 +76,7 @@ class TimeTrakingServiceImplTest {
         when(timeTrakingRepository.findById(timeTraking.getId())).thenReturn(Optional.empty());
 
         // then
-        assertThatThrownBy(() -> {
-            timeTrakingService.getById(timeTraking.getId());
-        }).isInstanceOf(NoSuchElementException.class)
+        assertThatThrownBy(() -> timeTrakingService.getById(timeTraking.getId())).isInstanceOf(NoSuchElementException.class)
                 .hasMessageContaining("No value present");
     }
 
@@ -116,9 +114,7 @@ class TimeTrakingServiceImplTest {
                 .thenReturn(Optional.empty());
 
         // then
-        assertThatThrownBy(() -> {
-            timeTrakingService.insert(timeTraking);
-        }).isInstanceOf(NoSuchElementException.class)
+        assertThatThrownBy(() -> timeTrakingService.insert(timeTraking)).isInstanceOf(NoSuchElementException.class)
                 .hasMessageContaining(String.format("Nu exista angat cu id-ul: %d", timeTraking.getEmployee().getId()));
     }
 
@@ -191,9 +187,7 @@ class TimeTrakingServiceImplTest {
         when(timeTrakingRepository.findById(timeTrakingToUpdate.getId())).thenReturn(Optional.empty());
 
         // then
-        assertThatThrownBy(() -> {
-            timeTrakingService.update(timeTrakingToUpdate.getId(), timeTrakingToUpdate);
-        }).isInstanceOf(NoSuchElementException.class)
+        assertThatThrownBy(() -> timeTrakingService.update(timeTrakingToUpdate.getId(), timeTrakingToUpdate)).isInstanceOf(NoSuchElementException.class)
                 .hasMessageContaining("No value present");
     }
 }

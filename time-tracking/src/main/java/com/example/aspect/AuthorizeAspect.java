@@ -28,10 +28,10 @@ public class AuthorizeAspect {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
-            String auth = request.getHeader(HttpHeaders.AUTHORIZATION);
-            if(auth == null || !authService.validateJwtToken(auth.replace(AUTH_HEADER_PARAMETER_BEARER, ""))) {
-                throw new AuthenticationException("Bad JWT token");
-            }
+        String auth = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if(auth == null || !authService.validateJwtToken(auth.replace(AUTH_HEADER_PARAMETER_BEARER, ""))) {
+            throw new AuthenticationException("Bad JWT token");
+        }
 
         //This is where ACTUAL METHOD will get invoke
         Object result = joinPoint.proceed();
