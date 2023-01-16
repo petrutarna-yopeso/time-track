@@ -1,5 +1,6 @@
 package com.example.project;
 
+import com.example.auth.AuthService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,9 @@ class ProjectControllerIT {
 
     @MockBean
     private ProjectService projectService;
+
+    @MockBean
+    private AuthService authService;
 
     @Autowired
     private MockMvc mockMvc;

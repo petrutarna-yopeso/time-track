@@ -1,7 +1,7 @@
 package com.example.employee;
 
-import com.example.employee.EmployeeRepository;
 import com.example.employee.EmployeeEntity;
+import com.example.employee.EmployeeRepository;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

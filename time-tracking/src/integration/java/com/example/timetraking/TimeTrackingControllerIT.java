@@ -1,5 +1,6 @@
 package com.example.timetraking;
 
+import com.example.auth.AuthService;
 import com.example.employee.EmployeeEntity;
 import com.example.project.ProjectEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +33,9 @@ class TimeTrackingControllerIT {
 
     @MockBean
     private TimeTrakingService timeTrakingService;
+
+    @MockBean
+    private AuthService authService;
 
     @Autowired
     private MockMvc mockMvc;
